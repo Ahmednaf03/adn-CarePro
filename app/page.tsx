@@ -1,6 +1,5 @@
 
 import Image from "next/image";
-import {Button} from "../components/ui/button";
 import PatientForm from "@/components/PatientForm";
 import Link from "next/link";
 export default function Home() {
@@ -8,7 +7,7 @@ export default function Home() {
     //TODO: Add a OTP verification or passkey modal
     <div className="flex h-screen max-h-screen ">
       <section className="remove-scrollbar container my-auto">
-        <div className="sub-container max-w-[4796px]">
+        <div className="sub-container max-w-[496px]">
           <Image
           src="assets/icons/logo-full.svg" alt="patient"
           height={1000} width={1000}
