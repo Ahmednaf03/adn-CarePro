@@ -3,9 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { set, useForm } from "react-hook-form"
 import { string, z } from "zod"
-import { Button } from "@/components/ui/button"
 import {Form} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "./SubmitButton"
 import { useState } from "react"
@@ -41,7 +39,7 @@ const PatientForm = () => {
     try{
         const userData ={name,email,phone}
        const user = await createUser(userData)
-       if(user) router.push(`patients/${user.$id}/register`)
+       if(user) {router.push(`patients/${user.$id}/register`)}
     }catch(error){
       console.log(error)
     }
