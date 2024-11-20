@@ -84,41 +84,39 @@ const RegisterForm = ({user}:{user:User}) => {
         />
         </div>
 
-       <div className="flex flex-col gap-6 xl:flex-row">
-       <CustomFormField
-        fieldType={FormFieldType.DATE_PICKER}
-        control={form.control}
-        name="birthDate"
-        label="Date of Birth"
-       
-        />
-        <CustomFormField
-        fieldType={FormFieldType.SKELETON}
-        control={form.control}
-        name="gender"
-        label="Gender"
-        renderSkeleton={(field)=>(
-            <FormControl>
-                <RadioGroup className="flex h-11 gap-6 
-                xl:justify-between" onValueChange={field.onChange}
-                defaultValue={field.value}>
-                    {GenderOptions.map((option)=>(
-                        <div key={option} className="radio-group">
-                            <RadioGroupItem
-                            value={option} id={option}>
-                                <Label htmlFor={option}
-                                className="cursor-pointer">
-                                    {option}
-                                    </Label>
-                            </RadioGroupItem>
-                        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.DATE_PICKER}
+              control={form.control}
+              name="birthDate"
+              label="Date of birth"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.SKELETON}
+              control={form.control}
+              name="gender"
+              label="Gender"
+              renderSkeleton={(field) => (
+                <FormControl>
+                  <RadioGroup
+                    className="flex h-11 gap-6 xl:justify-between"
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    {GenderOptions.map((option, i) => (
+                      <div key={option + i} className="radio-group">
+                        <RadioGroupItem value={option} id={option} />
+                        <Label htmlFor={option} className="cursor-pointer">
+                          {option}
+                        </Label>
+                      </div>
                     ))}
-                </RadioGroup>
-            </FormControl>
-        )}
-       
-        />
-       </div>
+                  </RadioGroup>
+                </FormControl>
+              )}
+            />
+          </div>
 
        <div className="flex flex-col gap-6 xl:flex-row">
         
