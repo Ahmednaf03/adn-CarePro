@@ -13,9 +13,8 @@ import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "./PatientForm"
 import { RadioGroup } from "../ui/radio-group"
 import { GenderOptions } from "@/constants"
-import { RadioGroupItem } from "@radix-ui/react-radio-group"
+import { RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "../ui/label"
-
 
  
 const RegisterForm = ({user}:{user:User}) => {
