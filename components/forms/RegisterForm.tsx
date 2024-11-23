@@ -17,7 +17,7 @@ import { RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "../ui/label"
 
  
-const RegisterForm = ({user}:{user:User}) => {
+const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof UserFormValidation>>({
