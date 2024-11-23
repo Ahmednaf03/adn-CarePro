@@ -7,22 +7,26 @@ import {Form, FormControl} from "@/components/ui/form"
 import CustomFormField from "../CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import { UserFormValidation } from "@/lib/validation"
+import { PatientFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.actions"
+import { createUser, registerPatient } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "./PatientForm"
 import { RadioGroup } from "../ui/radio-group"
-import { GenderOptions } from "@/constants"
+import { Doctors, GenderOptions, IdentificationTypes,PatientFormDefaultValues } from "@/constants"
 import { RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "../ui/label"
+import { SelectItem } from "../ui/select"
+import Image from "next/image"
+import FileUploader from "./FileUploader"
 
  
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email: "",
       phone: "",
@@ -30,12 +34,29 @@ const RegisterForm = ({ user }: { user: User }) => {
   })
  
   // 2. Define a submit handler.
-  async function onSubmit({name,email,phone}: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
    setIsLoading(true);
+   let formData;
+   if(values.identificationDocument && values.identificationDocument.length > 0){
+     const blobFile = new Blob([values.identificationDocument[0]],{
+       type: values.identificationDocument[0].type,
+     })
+     formData = new FormData()
+     formData.append("blobFile", blobFile)
+     formData.append("name", values.identificationDocument[0].name)
+
+   }
     try{
-        const userData ={name,email,phone}
-       const user = await createUser(userData)
-       if(user) {router.push(`patients/${user.$id}/register`)}
+      const patientData={
+        ...values,
+        userId: user.$id,
+        birthDate: new Date(values.birthDate),
+        IdentificationDocument: formData
+      }
+      //@ts-ignore
+     const patient = await registerPatient(patientData)
+
+     if(patient) router.push(`/patients/${user.$id}/new-appointment`)
     }catch(error){
       console.log(error)
     }
@@ -116,19 +137,190 @@ const RegisterForm = ({ user }: { user: User }) => {
               )}
             />
           </div>
+          
 
        <div className="flex flex-col gap-6 xl:flex-row">
-        
+       <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="address"
+        label="Address"
+        placeholder="11th Street, New York, NY"
+        />
+
+      <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="occupation"
+        label="Occupation"
+        placeholder="Software Engineer"
+        />
        </div>
-
+      
        <div className="flex flex-col gap-6 xl:flex-row">
-        
+       <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="emergencyContactName"
+        label="Emergency Contact Name"
+        placeholder="Guardian's Name"
+        />
+        <CustomFormField
+        fieldType={FormFieldType.PHONE_INPUT}
+        control={form.control}
+        name="emergencyContactNumber"
+        label="Emergency Contact Number"
+        placeholder="(987) 654-3210"
+       
+        />
+        </div>
+        <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical Information</h2>
+            </div>
+       
+        </section>
+
+        <CustomFormField
+        fieldType={FormFieldType.SELECT}
+        control={form.control}
+        name="primaryPhysician"
+        label="Primary Physician"
+        placeholder="Select a physician"
+       
+        >
+          {Doctors.map((doctor) => (
+            <SelectItem key={doctor.name} value={doctor.name}>
+              <div className="flex cursor-pointer items-center gap-2">
+              <Image
+              src={doctor.image}
+              height={32} width={32}
+              alt="doctor.name"
+              className="rounded-full border border-dark-500"/>
+              <p>{doctor.name}</p>
+              </div>
+            </SelectItem>
+          ))}
+          </CustomFormField>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="insuranceProvider"
+        label="Insurance Provider"
+        placeholder="Health Insurance"
+        />
+
+      <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="insurancePolicyNumber"
+        label="Insurance Policy Number"
+        placeholder="XYZ1234"
+        />
         </div>
 
         <div className="flex flex-col gap-6 xl:flex-row">
-        
+        <CustomFormField
+        fieldType={FormFieldType.TEXTAREA}
+        control={form.control}
+        name="allergies"
+        label="Allergies (if any)"
+        placeholder="Peanuts, Penicillin"
+        />
+
+      <CustomFormField
+        fieldType={FormFieldType.TEXTAREA}
+        control={form.control}
+        name="currentMedication"
+        label="Current Medication (if any)"
+        placeholder="Aspirin 200mg, Ibuprofen 250mg"
+        />
         </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField
+        fieldType={FormFieldType.TEXTAREA}
+        control={form.control}
+        name="familyMedicalHistory"
+        label="Family Medical History"
+        placeholder="mother had Diabetes, father had Hypertension"
+        />
+
+      <CustomFormField
+        fieldType={FormFieldType.TEXTAREA}
+        control={form.control}
+        name="pastMedicalHistory"
+        label="Past Medical History"
+        placeholder="Anxiety, Depression"
+        />
+        </div>
+
+        <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification and Verification</h2>
+            </div>
        
+        </section>
+       
+        <CustomFormField
+        fieldType={FormFieldType.SELECT}
+        control={form.control}
+        name="identificationType"
+        label="Identification Type"
+        placeholder="Select an identification type"
+       
+        >
+          {IdentificationTypes.map((type) => (
+           <SelectItem key={type} value={type}>
+              {type}
+            </SelectItem>
+          ))}
+          </CustomFormField>
+
+        <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="identificationNumber"
+        label="Identification Number"
+        placeholder="987654321"
+        />
+        <CustomFormField
+              fieldType={FormFieldType.SKELETON}
+              control={form.control}
+              name="identificationDocument"
+              label="Scanned Copy of Identification Document"
+              renderSkeleton={(field) => (
+                <FormControl>
+                  <FileUploader
+                  files={field.value}
+                 onChange={field.onChange} />
+                </FormControl>
+              )}
+            />
+             <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Constent and Privacy</h2>
+            </div>
+        </section>
+              <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="treatmentConsent"
+              label="I give consent for treatment"/>
+
+              <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="disclosureConsent"
+              label="I constent to disclosure of my information"/>
+
+              <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="privacyConsent"
+              label="I consent to privacy & policy"/>
+
         <SubmitButton isLoading={isLoading}> Get Started</SubmitButton>
       </form>
     </Form>
