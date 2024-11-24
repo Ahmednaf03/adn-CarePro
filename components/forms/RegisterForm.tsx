@@ -18,6 +18,7 @@ import { Label } from "../ui/label"
 import { SelectItem } from "../ui/select"
 import Image from "next/image"
 import FileUploader from "./FileUploader"
+import { log } from "console"
 
  
 const RegisterForm = ({ user }: { user: User }) => {
@@ -30,6 +31,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       name: "",
       email: "",
       phone: "",
+      gender: "male"
     },
   })
  
@@ -38,9 +40,9 @@ const RegisterForm = ({ user }: { user: User }) => {
    setIsLoading(true);
    let formData;
    if(values.identificationDocument && values.identificationDocument.length > 0){
-     const blobFile = new Blob([values.identificationDocument[0]],{
-       type: values.identificationDocument[0].type,
-     })
+    const blobFile = new Blob([values.identificationDocument[0]], {
+      type: values.identificationDocument[0].type,
+    });
      formData = new FormData()
      formData.append("blobFile", blobFile)
      formData.append("name", values.identificationDocument[0].name)
@@ -51,8 +53,10 @@ const RegisterForm = ({ user }: { user: User }) => {
         ...values,
         userId: user.$id,
         birthDate: new Date(values.birthDate),
-        IdentificationDocument: formData
+        identificationDocument: formData
       }
+      console.log(patientData.identificationDocument?.get("blobFile"));
+      
       //@ts-ignore
      const patient = await registerPatient(patientData)
 
