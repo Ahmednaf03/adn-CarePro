@@ -18,7 +18,6 @@ import { Label } from "../ui/label"
 import { SelectItem } from "../ui/select"
 import Image from "next/image"
 import FileUploader from "./FileUploader"
-import { log } from "console"
 
  
 const RegisterForm = ({ user }: { user: User }) => {
@@ -31,7 +30,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       name: "",
       email: "",
       phone: "",
-      gender: "male"
     },
   })
  
