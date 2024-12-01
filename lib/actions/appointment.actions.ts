@@ -6,6 +6,7 @@ import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT,  PROJECT_I
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { parse } from "path";
+import { revalidatePath } from "next/cache";
 
 
 export const createAppointment = async (appointment :CreateAppointmentParams)=>{
@@ -78,6 +79,28 @@ export const getRecentAppointmentList = async ()=>{
         return parseStringify(data);
     } catch (error) {
         console.log("an error has occured"+error);
+        
+    }
+}
+export const updateAppointment =async ({appointmentId,userId,appointment,type}
+    :UpdateAppointmentParams
+)=>{
+    try {
+        const updatedAppointment = await databases.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENT_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        )
+        if(!updatedAppointment){
+            throw new Error("Appointment no found")
+        }
+        // TODO SMS confirmation
+        revalidatePath("/admin")
+        return parseStringify(updatedAppointment);
+        
+    } catch (error) {
+        console.log("an error has occured during update"+error);
         
     }
 }
