@@ -1,9 +1,9 @@
 
 
 "use server"
-import { ID, Query } from "node-appwrite";
-import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT,  PROJECT_ID } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { ID, Messaging, Query } from "node-appwrite";
+import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT,  messaging,  PROJECT_ID } from "../appwrite.config";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { parse } from "path";
 import { revalidatePath } from "next/cache";
@@ -95,12 +95,32 @@ export const updateAppointment =async ({appointmentId,userId,appointment,type}
         if(!updatedAppointment){
             throw new Error("Appointment no found")
         }
-        // TODO SMS confirmation
+        const smsMessage =`Hi, its CarePro
+        ${type==="schedule"?`your appointment has been scheduled for 
+        ${formatDateTime(appointment.schedule).dateTime}  with Dr. ${appointment.primaryPhysician}`:
+      `we regret to infrom you your appointment has been cancelled Reason : 
+      ${appointment.cancellationReason}` }  `
+      await sendSMSNotification(userId,smsMessage)  
+      // TODO SMS confirmation
         revalidatePath("/admin")
         return parseStringify(updatedAppointment);
         
     } catch (error) {
         console.log("an error has occured during update"+error);
+        
+    }
+}
+export const sendSMSNotification = async ( userId:string,content:string)=>{
+    try {
+        const message = await messaging.createSms(
+            ID.unique(),
+            content,
+            [],
+            [userId]
+        )
+        return parseStringify(message);
+    } catch (error) {
+        console.log("an error has occured during sms notification"+error);
         
     }
 }
