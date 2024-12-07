@@ -18,7 +18,7 @@ const AppointmnetModal = ({
     appointment
 
 }:{
-    type:"schedule" | "cancel"
+    type:"schedule" | "cancel" |"pending"
     patientId:string,
     userId:string,
     appointment?:Appointment

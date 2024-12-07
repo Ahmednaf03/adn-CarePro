@@ -23,35 +23,40 @@ const AppointmentForm = ({
 }:{
     userId:string,
     patientId:string,
-    type:"create" | "cancel" | "schedule",
+    type:"create" | "cancel" | "schedule" |"pending",
     appointment?:Appointment,
     setOpen:(open:boolean)=>void
 }) => {
     const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const AppointmentFormValidation = getAppointmentSchema(type)
-  console.log(appointment);
+  // console.log(appointment);
   
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
      primaryPhysician: appointment? appointment.primaryPhysician:"",
-     schedule: appointment ? new Date(appointment.schedule):new Date(),
+     schedule: appointment ? new Date(appointment?.schedule):new Date(Date.now()),
      reason: appointment? appointment.reason:"",
-     note: appointment? appointment.note:"",
-     cancellationReason: appointment? appointment.cancellationReason:"",
+     note: appointment?.note ||"",
+     cancellationReason: appointment?.cancellationReason ||"",
     },
   })
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
-   setIsLoading(true);
+console.log("submission works during schedule");
+
+    setIsLoading(true);
    let status 
 
    switch(type){
        case "schedule":
         status="scheduled"
         break;
+        case "cancel":
+            status="cancelled"
+            break;
         default:
             status="pending"
             break;
@@ -67,7 +72,7 @@ const AppointmentForm = ({
             note:values.note,
             status:status as Status
         }
-        console.log(appointmentData.schedule);
+        // console.log(appointmentData.schedule);
         
         const appointment = await createAppointment(appointmentData)
         if(appointment){
@@ -90,6 +95,8 @@ const AppointmentForm = ({
           type
         }
         const updatedAppointment = await updateAppointment(appointmentToUpdate)
+        console.log("i am the updated cancelled prop",updatedAppointment.status);
+        
         if(updatedAppointment){
           setOpen && setOpen(false)
           form.reset()
