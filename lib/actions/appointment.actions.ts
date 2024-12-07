@@ -86,8 +86,6 @@ export const updateAppointment =async ({appointmentId,userId,appointment,type}
     :UpdateAppointmentParams
 )=>{
     try {
-        console.log("Server side updation also gets triggered",appointment);
-        
         const updatedAppointment = await databases.updateDocument(
             DATABASE_ID!,
             APPOINTMENT_COLLECTION_ID!,
