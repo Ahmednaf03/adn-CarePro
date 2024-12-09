@@ -5,7 +5,6 @@ import { ID, Messaging, Query } from "node-appwrite";
 import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT,  messaging,  PROJECT_ID } from "../appwrite.config";
 import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
-import { parse } from "path";
 import { revalidatePath } from "next/cache";
 
 
