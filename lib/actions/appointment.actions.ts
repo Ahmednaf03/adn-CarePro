@@ -95,10 +95,8 @@ export const updateAppointment =async ({appointmentId,userId,appointment,type}
             throw new Error("Appointment no found")
         }
         const smsMessage =`Hi, its CarePro
-        ${type==="schedule"?`your appointment has been scheduled for 
-        ${formatDateTime(appointment.schedule).dateTime}  with Dr. ${appointment.primaryPhysician}`:
-      `we regret to infrom you your appointment has been cancelled Reason : 
-      ${appointment.cancellationReason}` }  `
+        ${type==="schedule"?`your appointment has been scheduled for ${formatDateTime(appointment.schedule).dateTime}  with Dr. ${appointment.primaryPhysician}`:
+      `we regret to infrom you your appointment has been cancelled Reason :  ${appointment.cancellationReason}` }  `
       await sendSMSNotification(userId,smsMessage)  
       // TODO SMS confirmation
         revalidatePath("/admin")
