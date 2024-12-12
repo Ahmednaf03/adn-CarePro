@@ -20,7 +20,7 @@ export default async function NewAppointment({params:{userId}}:SearchParamProps)
           patientId={patient.$id}/>
           
            <p className="copyright mt-10 py-12">
-             ©2024 CarePro</p>
+             ©2024 CarePulse</p>
           
         </div>
         </section>

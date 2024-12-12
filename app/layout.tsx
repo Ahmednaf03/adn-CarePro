@@ -17,7 +17,7 @@ const FontSans = Plus_Jakarta_Sans({
 // });
 
 export const metadata: Metadata = {
-  title: "CarePro",
+  title: "CarePulse",
   description: "Healthcare management system",
 };
 
