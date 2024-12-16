@@ -12,14 +12,14 @@ export default function Home({searchParams}:SearchParamProps) {
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image
-          src="assets/icons/logo-full.svg" alt="patient"
+          src="assets/icons/Untitled.svg" alt="patient"
           height={1000} width={1000}
           className="mb-12 h-12 w-fit  "/>
           <PatientForm/>
           <div className="text-14-regular mt-20 flex justify-between
            ">
            <p className="justify-items-end text-dark-600 xl:text-left">
-             ©2024 CarePulse</p>
+             ©2024 CarePro</p>
              <Link href="/?admin=true" className="text-green-500">
              Admin
              </Link>

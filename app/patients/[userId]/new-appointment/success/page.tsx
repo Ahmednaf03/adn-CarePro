@@ -19,7 +19,7 @@ const Success = async ({params:{userId},searchParams}:SearchParamProps) => {
       <div className="success-img">
         <Link href="/">
         <Image
-        src="/assets/icons/logo-full.svg"
+        src="/assets/icons/Untitled.svg"
         height={1000} width={1000}
         alt="logo"
         className="h-10 w-fit"/>
@@ -57,7 +57,7 @@ const Success = async ({params:{userId},searchParams}:SearchParamProps) => {
         New Appointment
         </Link>
        </Button>
-       <p className="copyright"> © 2024 CarePusle</p>
+       <p className="copyright"> © 2024 CarePro</p>
       </div>
       </div>
   )

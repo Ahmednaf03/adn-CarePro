@@ -11,7 +11,7 @@ export default async function NewAppointment({params:{userId}}:SearchParamProps)
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[860px] flex-1 justify-between">
           <Image
-          src="../../assets/icons/logo-full.svg" alt="patient"
+          src="../../assets/icons/Untitled.svg" alt="patient"
           height={1000} width={1000}
           className="mb-12 h-12 w-fit  "/>
           <AppointmentForm
@@ -20,7 +20,7 @@ export default async function NewAppointment({params:{userId}}:SearchParamProps)
           patientId={patient.$id}/>
           
            <p className="copyright mt-10 py-12">
-             ©2024 CarePulse</p>
+             ©2024 CarePro</p>
           
         </div>
         </section>
