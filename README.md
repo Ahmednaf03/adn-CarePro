@@ -80,7 +80,7 @@ NEXT_PUBLIC_APPWRITE_BUCKET_ID=your_bucket_id
 NEXT_PUBLIC_ADMIN_PASSKEY=your_pass_key
 ```
 
-4. **Running the Development Server** to run the production server 
+4. **Running the Development Server**
 
 ```bash
 npm run dev
