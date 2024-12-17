@@ -65,9 +65,10 @@ ADN-CarePro is designed to streamline hospital appointment management and regist
 
 ```bash
 npm install
+```
 
 3. **Setup Environment Variables**: Create a .env.local file and add the required environment variables:
-
+```bash
 NEXT_PUBLIC_APPWRITE_ENDPOINT=https://appwrite.io/v1
 NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_project_id
 NEXT_PUBLIC_APPWRITE_DATABASE_ID=your_database_id
@@ -79,7 +80,7 @@ NEXT_PUBLIC_APPWRITE_BUCKET_ID=your_bucket_id
 NEXT_PUBLIC_ADMIN_PASSKEY=your_pass_key
 ```
 
-Running the Development Server
+4. **Running the Development Server** to run the production server 
 
 ```bash
 npm run dev
@@ -105,6 +106,6 @@ if ran into version mismatch just make sure to add the .npmrc file
 ### Contact
 For any questions or feedback, feel free to reach out:
 
-GitHub: Ahmednaf03
+GitHub: https://github.com/Ahmednaf03
 
 Email: ahamednafees777@gmail.com
