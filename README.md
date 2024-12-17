@@ -22,7 +22,7 @@ ADN-CarePro is designed to streamline hospital appointment management and regist
 - **Patient Registration**: Streamlined process for registering new patients.
 - **Doctor Management**: Manage doctor schedules and availability.
 - **Notification System**: Alerts and reminders for upcoming appointments.
-- **Secure Data Handling**: Ensures patient data is handled securely.
+- **Secure Data Handling**: Ensures patient data is handled securely using encryption and appwrite auth.
 - **Responsive Design**: Optimized for various devices and screen sizes.
 - **CI/CD with Vercel**: Automated deployments and continuous integration.
 - **Customizable Form Builder** : Fully customizable and dynamic form builder for every need. 
