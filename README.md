@@ -91,17 +91,19 @@ Building for Production
 npm run build
 npm run start
 ```
-Configuration
-Appwrite Configuration
+
+### Appwrite Configuration
+
 Ensure you have the correct project and database IDs set in your environment variables. Check the Appwrite documentation for more details on setting up your backend services.
 
-Next.jsConfiguration
+### Next.jsConfiguration
 Update next.config.js if you have any custom configurations or plugins.
+
 also this runs or --peer-legacy-deps feel free to run it on latest veriosn 
 if ran into version mismatch just make sure to add the .npmrc file 
 
 
-Contact
+Contact:
 For any questions or feedback, feel free to reach out:
 
 GitHub: Ahmednaf03
